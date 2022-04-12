@@ -6,11 +6,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="com.mirim.biz"/>
-    <bean id="log" class="com.mirim.biz.common.Log4jAdvice"/>
+    <bean id="around" class="com.mirim.biz.common.AroundAdvice"/>
+<!--    <bean id="before" class="com.mirim.biz.common.BeforeAdvice"/>-->
         <aop:config>
             <aop:pointcut id="allPointcut" expression="execution(* com.mirim.biz..*Impl.*(..))"/>
-            <aop:aspect ref="log">
-                <aop:before method="printLogging" pointcut-ref="allPointcut"/>
+            <aop:pointcut id="getPointcut" expression="execution(* com.mirim.biz..*Impl.get*(..))"/>
+<!--            <aop:aspect ref="afterReturning">-->
+<!--                <aop:after-returning method="AfterReturningLog" pointcut-ref="getPointcut"/>-->
+<!--            </aop:aspect>-->
+            <aop:aspect ref="around">
+                <aop:before method="aroundLog" pointcut-ref="allPointcut"/>
             </aop:aspect>
         </aop:config>
 
