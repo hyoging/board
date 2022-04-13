@@ -7,15 +7,16 @@
 
     <context:component-scan base-package="com.mirim.biz"/>
     <bean id="around" class="com.mirim.biz.common.AroundAdvice"/>
-<!--    <bean id="before" class="com.mirim.biz.common.BeforeAdvice"/>-->
+    <bean id="before" class="com.mirim.biz.common.BeforeAdvice"/>
+    <bean id="afterReturning" class="com.mirim.biz.common.AfterReturningAdvice"/>
         <aop:config>
             <aop:pointcut id="allPointcut" expression="execution(* com.mirim.biz..*Impl.*(..))"/>
             <aop:pointcut id="getPointcut" expression="execution(* com.mirim.biz..*Impl.get*(..))"/>
 <!--            <aop:aspect ref="afterReturning">-->
 <!--                <aop:after-returning method="AfterReturningLog" pointcut-ref="getPointcut"/>-->
 <!--            </aop:aspect>-->
-            <aop:aspect ref="around">
-                <aop:before method="aroundLog" pointcut-ref="allPointcut"/>
+            <aop:aspect ref="afterReturning">
+                <aop:after-returning method="AfterReturningLog" pointcut-ref="getPointcut" returning="returnObj"/>
             </aop:aspect>
         </aop:config>
 
