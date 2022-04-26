@@ -2,8 +2,17 @@ package com.mirim.biz.common;
 
 import com.mirim.biz.user.UserVO;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Service;
 
+@Service
+@Aspect
 public class AfterReturningAdvice {
+
+    @AfterReturning(pointcut = "PointcutCommon.getPointcut()", returning = "returnObj")
     public void AfterReturningLog(JoinPoint jp, Object returnObj){
         String method = jp.getSignature().getName();
 
